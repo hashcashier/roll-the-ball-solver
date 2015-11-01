@@ -14,47 +14,6 @@ public class Grid {
 	private Cell[][] mCells;
 	
 	/**
-	 * OPEN: A truth table for each cell type depicting if it is open from each direction.
-	 * DROW: A table depicting the change in row value for each direction.
-	 * DCOL: A table depicting the change in column value for each direction.
-	 * 0 Up
-	 * 1 Right
-	 * 2 Left
-	 * 3 Down
-	 */
-	private static int CELL_TYPES = 14;
-	private static boolean[][] OPEN;
-	private static int[] DROW;
-	private static int[] DCOL;
-	static {
-		OPEN = new boolean[CELL_TYPES][4];
-		for (int i = 0; i < CELL_TYPES; i++) {
-			Arrays.fill(OPEN[i], false);
-		}
-		OPEN[Cell.INITIAL_D.ordinal()][3] 	= true;
-		OPEN[Cell.INITIAL_R.ordinal()][1] 	= true;
-		OPEN[Cell.GOAL_U.ordinal()][0] 		= true;
-		OPEN[Cell.GOAL_R.ordinal()][1] 		= true;
-		OPEN[Cell.GOAL_D.ordinal()][3] 		= true;
-		OPEN[Cell.GOAL_L.ordinal()][2] 		= true;
-		OPEN[Cell.PATH_DL.ordinal()][3] 	= true;
-		OPEN[Cell.PATH_DL.ordinal()][2] 	= true;
-		OPEN[Cell.PATH_LR.ordinal()][2] 	= true;
-		OPEN[Cell.PATH_LR.ordinal()][1] 	= true;
-		OPEN[Cell.PATH_RD.ordinal()][1] 	= true;
-		OPEN[Cell.PATH_RD.ordinal()][3] 	= true;
-		OPEN[Cell.PATH_UD.ordinal()][0] 	= true;
-		OPEN[Cell.PATH_UD.ordinal()][3] 	= true;
-		OPEN[Cell.PATH_UL.ordinal()][0] 	= true;
-		OPEN[Cell.PATH_UL.ordinal()][2] 	= true;
-		OPEN[Cell.PATH_UR.ordinal()][0] 	= true;
-		OPEN[Cell.PATH_UR.ordinal()][1] 	= true;
-		
-		DROW = new int[]{-1, 0, 0, 1};
-		DCOL = new int[]{0, 1, -1, 0};
-	}
-
-	/**
 	 * 
 	 * @param rows
 	 * @param cols
@@ -68,7 +27,7 @@ public class Grid {
 		mCols = cols;
 		mCells = new Cell[rows][cols];
 		for(int i = 0; i < rows; i++) {
-			Arrays.fill(mCells, Cell.BLANK);
+			Arrays.fill(mCells[i], Cell.BLANK);
 		}
 		set(0, 0, initial);
 		set(gRow, gCol, goal);
@@ -123,24 +82,24 @@ public class Grid {
 	public Position pathEnd() {
 		for(int r = 0, c = 0, p = 0, q = 0;;) {
 			Cell current = get(r, c);
-			for(int k = 0; k <= 4; k++) {
+			for(int k = 0; k <= GridConfig.DIRECTIONS; k++) {
 				// If we have no direction to move in
-				if (k == 4) {
+				if (k == GridConfig.DIRECTIONS) {
 					return new Position(r, c);
 				}
 				// If cell (r, c) is not open from this direction
-				if (!OPEN[current.ordinal()][k]) {
+				if (!GridConfig.cellOpen(current, k)) {
 					continue;
 				}
-				int nextR = r + DROW[k];
-				int nextC = c + DCOL[k];
+				int nextR = r + GridConfig.deltaRow(k);
+				int nextC = c + GridConfig.deltaCol(k);
 				// If going out of range or back to previous cell (p, q)
 				if (!inRange(nextR, nextC) || (nextR == p && nextC == q)) {
 					continue;
 				}
 				Cell next = get(nextR, nextC);
 				// If the target cell is not open from the opposite side
-				if (!OPEN[next.ordinal()][3 - k]) {
+				if (!GridConfig.cellOppositeOpen(next, k)) {
 					continue;
 				}
 				p = r;
@@ -167,5 +126,27 @@ public class Grid {
 	public boolean isSolved() {
 		Position end = pathEnd();
 		return end.row == mGRow && end.col == mGCol;
+	}
+	
+	private static char BORDER_CHAR = '░';
+	public String toString() {
+		String border = "";
+		for (int i = 0; i < mCols + 2; i++) {
+			border += BORDER_CHAR;
+		}
+		String result = border;
+		for (int i = 0; i < mRows; i++) {
+			result += "\n";
+			result += BORDER_CHAR;
+			for (int j = 0; j < mCols; j++) {
+				result += GridConfig.getRepresentation(mCells[i][j]);
+			}
+			result += BORDER_CHAR;
+		}
+		result += "\n" + border;
+		if (isSolved()) {
+			result += "\nSOLVED";
+		}
+		return result;
 	}
 }

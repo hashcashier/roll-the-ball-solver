@@ -10,9 +10,9 @@ public class GridGenerator {
 	public static Grid generate() {
 		int rows = rand().nextInt(1, MAX_ROWS);
 		int cols = rand().nextInt(rows == 1 ? 2 : 1, MAX_COLS);
-		Cell initial = rand().nextBoolean() ? Cell.INITIAL_R : Cell.INITIAL_D;
+		Cell initial = (rand().nextBoolean() && cols > 1) || rows == 1 ? Cell.INITIAL_R : Cell.INITIAL_D;
 		
-		int gRow = rand().nextInt(rows);
+		int gRow = rand().nextInt(cols == 1 ? 1 : 0, rows);
 		int gCol = rand().nextInt(gRow == 0 ? 1 : 0, cols);
 		Cell goal = randomGoalCell(rows, cols, gRow, gCol, initial);
 		
