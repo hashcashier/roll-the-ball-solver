@@ -1,5 +1,8 @@
 package roll_the_ball;
 
+import grid.Grid;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,6 +23,8 @@ public abstract class Problem {
 	public abstract boolean goalTest(State<?> currState);
 
 	public abstract int pathCost(State<?> currState);
+
+	public abstract List<?> search(Grid grid, String strategy, boolean visualize);
 
 	public int[] getOperators() {
 		return operators;

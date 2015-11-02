@@ -1,5 +1,8 @@
 package roll_the_ball;
 
+import grid.Grid;
+
+import java.util.List;
 import java.util.Set;
 
 public class RollTheBall extends Problem {
@@ -25,6 +28,12 @@ public class RollTheBall extends Problem {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<?> search(Grid grid, String strategy, boolean visualize) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
