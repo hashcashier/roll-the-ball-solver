@@ -13,6 +13,7 @@ public class GridConfig {
 	 * 3 Down
 	 */
 	public static int DIRECTIONS = 4;
+	public static char BORDER_CHAR = '░';
 	private static int CELL_TYPES = Cell.class.getEnumConstants().length;
 	private static boolean[][] OPEN;
 	private static int[] DROW;
@@ -69,12 +70,12 @@ public class GridConfig {
 		REPRESENTATION[Cell.GOAL_R.ordinal()] = '<';
 		REPRESENTATION[Cell.GOAL_L.ordinal()] = '>';
 		REPRESENTATION[Cell.GOAL_D.ordinal()] = '^';
-		REPRESENTATION[Cell.PATH_DL.ordinal()] = '╗';
-		REPRESENTATION[Cell.PATH_LR.ordinal()] = '═';
-		REPRESENTATION[Cell.PATH_RD.ordinal()] = '╔';
-		REPRESENTATION[Cell.PATH_UD.ordinal()] = '║';
+		REPRESENTATION[Cell.PATH_DL.ordinal()] = '7';
+		REPRESENTATION[Cell.PATH_LR.ordinal()] = '-';
+		REPRESENTATION[Cell.PATH_RD.ordinal()] = '/';
+		REPRESENTATION[Cell.PATH_UD.ordinal()] = '|';
 		REPRESENTATION[Cell.PATH_UL.ordinal()] = '╝';
-		REPRESENTATION[Cell.PATH_UR.ordinal()] = '╚';
+		REPRESENTATION[Cell.PATH_UR.ordinal()] = 'L';
 */
 		
 }

@@ -35,20 +35,20 @@ public class Grid {
 		mGCol = gCol;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public int getRows() {
 		return mRows;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public int getCols() {
 		return mCols;
+	}
+	
+	public int getGRow() {
+		return mGRow;
+	}
+	
+	public int getGCol() {
+		return mGCol;
 	}
 	
 	/**
@@ -128,20 +128,19 @@ public class Grid {
 		return end.row == mGRow && end.col == mGCol;
 	}
 	
-	private static char BORDER_CHAR = '░';
 	public String toString() {
 		String border = "";
 		for (int i = 0; i < mCols + 2; i++) {
-			border += BORDER_CHAR;
+			border += GridConfig.BORDER_CHAR;
 		}
 		String result = border;
 		for (int i = 0; i < mRows; i++) {
 			result += "\n";
-			result += BORDER_CHAR;
+			result += GridConfig.BORDER_CHAR;
 			for (int j = 0; j < mCols; j++) {
 				result += GridConfig.getRepresentation(mCells[i][j]);
 			}
-			result += BORDER_CHAR;
+			result += GridConfig.BORDER_CHAR;
 		}
 		result += "\n" + border;
 		if (isSolved()) {

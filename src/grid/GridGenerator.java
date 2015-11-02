@@ -61,6 +61,18 @@ public class GridGenerator {
 	}
 	
 	private static void generateGridBody(Grid grid) {
+		int free = grid.getRows()*grid.getCols() - 2;
+		if (free == 0) {
+			return;
+		}
+		Cell start = grid.get(0, 0);
+		int startR = start == Cell.INITIAL_D ? 1 : 0;
+		int startC = start == Cell.INITIAL_R ? 1 : 0;
+		int gRow = grid.getGRow();
+		int gCol = grid.getGCol();
+		Cell end = grid.get(gRow, gCol);
+		int finishR = end == Cell.GOAL_D ? gRow + 1 : end == Cell.GOAL_U ? gRow - 1 : gRow;
+		int finishC = end == Cell.GOAL_R ? gCol + 1 : end == Cell.GOAL_L ? gCol - 1 : gCol;
 		
 	}
 	
