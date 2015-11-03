@@ -21,6 +21,7 @@ public class GridGenerator {
 		int sRow = sPos / cols;
 		int sCol = sPos % cols;
 		Cell initial = randomStartCell(rows, cols, sRow, sCol);
+		initial.fixed = true;
 		
 		int gRow = gPos / cols;
 		int gCol = gPos % cols;
@@ -28,6 +29,7 @@ public class GridGenerator {
 		if (goal == null) {
 			return generate();
 		}
+		goal.fixed = true;
 		
 		Grid grid = new Grid(rows, cols, initial, gRow, gCol, goal, sRow, sCol);
 		

@@ -12,5 +12,7 @@ public enum Cell {
 	PATH_UR,
 	PATH_RD,
 	PATH_DL,
-	PATH_UL,
+	PATH_UL;
+	
+	public boolean fixed;
 }
