@@ -33,7 +33,9 @@ public class GridGenerator {
 		
 		Grid grid = new Grid(rows, cols, initial, gRow, gCol, goal, sRow, sCol);
 		
-		generateGridBody(grid);
+		if (!generateGridBody(grid)) {
+			return generate();
+		}
 		
 		return grid;
 	}
@@ -81,22 +83,95 @@ public class GridGenerator {
 		return result;
 	}
 	
-	private static void generateGridBody(Grid grid) {
+	private static boolean generateGridBody(Grid grid) {
 		int free = grid.getRows()*grid.getCols() - 2;
 		if (free == 0) {
-			return;
+			return false;
 		}
+		
 		int sRow = grid.getSRow();
 		int sCol = grid.getSCol();
+		int sPos = sRow*grid.getCols() + sCol;
 		Cell start = grid.get(sRow, sCol);
 		int startR = start == Cell.END_D ? sRow + 1 : start == Cell.END_U ? sRow - 1 : sRow;
 		int startC = start == Cell.END_R ? sCol + 1 : start == Cell.END_L ? sCol - 1 : sCol;
+		
 		int gRow = grid.getGRow();
 		int gCol = grid.getGCol();
+		int gPos = gRow*grid.getCols() + gCol;
 		Cell end = grid.get(gRow, gCol);
 		int finishR = end == Cell.END_D ? gRow + 1 : end == Cell.END_U ? gRow - 1 : gRow;
 		int finishC = end == Cell.END_R ? gCol + 1 : end == Cell.END_L ? gCol - 1 : gCol;
 		
+		int deltaRow = Math.abs(finishR - startR);
+		int deltaCol = Math.abs(finishC - startC);
+		
+		if (deltaRow + deltaCol >= free) {
+			return false;
+		}
+		
+		ArrayList<Integer> posList = new ArrayList<>();
+		for (int i = 0; i < grid.getRows()*grid.getCols(); i++) {
+			if (i != sPos && i != gPos) {
+				posList.add(i);
+			}
+		}
+		
+		int nonEmpty = rand().nextInt(deltaRow + deltaCol, free);
+		for (int i = 0; i < nonEmpty; i++) {
+			int hType = rand().nextInt(12);
+			Cell cell = null;
+			switch(hType) {
+			case 0:
+				cell = Cell.PATH_UR;
+				deltaRow--;
+				deltaCol--;
+				break;
+			case 1:
+				cell = Cell.PATH_RD;
+				deltaRow--;
+				deltaCol--;
+				break;
+			case 2:
+				cell = Cell.PATH_DL;
+				deltaRow--;
+				deltaCol--;
+				break;
+			case 3:
+				cell = Cell.PATH_UL;
+				deltaRow--;
+				deltaCol--;
+				break;
+			case 4:
+			case 5:
+			case 6:
+				cell = Cell.PATH_UD;
+				deltaRow--;
+				break;
+			case 7:
+			case 8:
+			case 9:
+				cell = Cell.PATH_LR;
+				deltaRow--;
+				break;
+			case 10:
+			case 11:
+				cell = Cell.BLOCK;
+				break;
+			}
+			cell.fixed = rand().nextBoolean();
+			addCellToGrid(cell, grid, posList);
+		}
+		
+		return deltaRow <= 0 && deltaCol <= 0 && posList.size() >= 1;
+	}
+	
+	private static void addCellToGrid(Cell cell, Grid grid, ArrayList<Integer> positions) {
+		int hPos = rand().nextInt(positions.size());
+		int hRow = positions.get(hPos) / grid.getCols();
+		int hCol = positions.get(hPos) % grid.getCols();
+		grid.set(hRow, hCol, cell);
+		positions.remove(hPos);
 	}
 	
 	private static ThreadLocalRandom rand() {
