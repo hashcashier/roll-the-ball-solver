@@ -2,12 +2,10 @@ package grid;
 
 public enum Cell {
 	BLANK,
-	INITIAL_R,
-	INITIAL_D,
-	GOAL_L,
-	GOAL_U,
-	GOAL_R,
-	GOAL_D,
+	END_L,
+	END_U,
+	END_R,
+	END_D,
 	BLOCK,
 	PATH_UD,
 	PATH_LR,

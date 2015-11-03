@@ -7,6 +7,8 @@ public class Grid {
 	private int mCols;
 	private int mGRow;
 	private int mGCol;
+	private int mSRow;
+	private int mSCol;
 	/**
 	 * Dimensions: mRows * mCols
 	 * Refer to @Cell enum
@@ -21,15 +23,19 @@ public class Grid {
 	 * @param gRow
 	 * @param gCol
 	 * @param goal
+	 * @param sCol
+	 * @param soal
 	 */
-	public Grid(int rows, int cols, Cell initial, int gRow, int gCol, Cell goal) {
+	public Grid(int rows, int cols, Cell initial, int gRow, int gCol, Cell goal, int sRow, int sCol) {
 		mRows = rows;
 		mCols = cols;
 		mCells = new Cell[rows][cols];
 		for(int i = 0; i < rows; i++) {
 			Arrays.fill(mCells[i], Cell.BLANK);
 		}
-		set(0, 0, initial);
+		set(sRow, sCol, initial);
+		mSRow = sRow;
+		mSCol = sCol;
 		set(gRow, gCol, goal);
 		mGRow = gRow;
 		mGCol = gCol;
@@ -49,6 +55,14 @@ public class Grid {
 	
 	public int getGCol() {
 		return mGCol;
+	}
+	
+	public int getSRow() {
+		return mSRow;
+	}
+	
+	public int getSCol() {
+		return mSCol;
 	}
 	
 	/**
@@ -80,7 +94,7 @@ public class Grid {
 	 * @return the @Position of the last reachable cell from the initial cell
 	 */
 	public Position pathEnd() {
-		for(int r = 0, c = 0, p = 0, q = 0;;) {
+		for(int r = mSRow, c = mSCol, p = r, q = c;;) {
 			Cell current = get(r, c);
 			for(int k = 0; k <= GridConfig.DIRECTIONS; k++) {
 				// If we have no direction to move in
