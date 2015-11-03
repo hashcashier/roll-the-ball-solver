@@ -1,26 +1,29 @@
 package roll_the_ball;
 
-import grid.Grid;
-
-import java.util.List;
 import java.util.Set;
+
+import grid.Grid;
+import search.Problem;
+import search.Solution;
+import search.space.Operator;
+import search.space.State;
 
 public class RollTheBall extends Problem {
 
-	public RollTheBall(int[] operators, State<?> initState,
-			Set<State<?>> stateSpace) {
+	public RollTheBall(Operator[] operators, State initState,
+			Set<State> stateSpace) {
 		super(operators, initState, stateSpace);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public boolean goalTest(State<?> currState) {
+	public boolean goalTest(State currState) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public int pathCost(State<?> currState) {
+	public int pathCost(State currState) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -30,8 +33,7 @@ public class RollTheBall extends Problem {
 
 	}
 
-	@Override
-	public List<?> search(Grid grid, String strategy, boolean visualize) {
+	public Solution search(Grid grid, String strategy, boolean visualize) {
 		// TODO Auto-generated method stub
 		return null;
 	}

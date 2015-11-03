@@ -2,7 +2,9 @@ package grid;
 
 import java.util.Arrays;
 
-public class Grid {
+import search.space.State;
+
+public class Grid implements State {
 	private int mRows;
 	private int mCols;
 	private int mGRow;
