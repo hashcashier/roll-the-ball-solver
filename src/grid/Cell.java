@@ -1,18 +1,27 @@
 package grid;
 
-public enum Cell {
-	BLANK,
-	END_L,
-	END_U,
-	END_R,
-	END_D,
-	BLOCK,
-	PATH_UD,
-	PATH_LR,
-	PATH_UR,
-	PATH_RD,
-	PATH_DL,
-	PATH_UL;
+public class Cell {
+	private CellType mType;
+	private boolean mFixed;
 	
-	public boolean fixed;
+	public Cell(CellType type) {
+		mType = type;
+	}
+	
+	public Cell(CellType type, boolean fixed) {
+		this(type);
+		mFixed = fixed;
+	}
+	
+	public void setFixed(boolean fixed) {
+		mFixed = fixed;
+	}
+	
+	public boolean getFixed() {
+		return mFixed;
+	}
+	
+	public CellType getType() {
+		return mType;
+	}
 }

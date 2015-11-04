@@ -5,6 +5,7 @@ import java.util.Set;
 import grid.Grid;
 import search.Problem;
 import search.Solution;
+import search.space.Node;
 import search.space.Operator;
 import search.space.State;
 
@@ -34,6 +35,12 @@ public class RollTheBall extends Problem {
 	}
 
 	public Solution search(Grid grid, String strategy, boolean visualize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getInitNode() {
 		// TODO Auto-generated method stub
 		return null;
 	}

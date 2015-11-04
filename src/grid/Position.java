@@ -1,9 +1,15 @@
 package grid;
 
 public class Position {
-	public int row, col;
+	public int row, col, len;
+
 	public Position(int r, int c) {
 		row = r;
 		col = c;
+	}
+
+	public Position(int r, int c, int L) {
+		this(r, c);
+		len = L;
 	}
 }

@@ -12,7 +12,7 @@ public class Search {
 	public static Solution search(Problem problem, Strategy queueStrategy) {
 		int totalExpandedNodesCount = 1;
 		Queue<Node> queue = queueStrategy.initialize();
-		queue.add(problem.getInitNode());
+		queueStrategy.enqueue(queue, problem.getInitNode());
 		while (!queue.isEmpty()) {
 			Node front = queue.remove();
 			if (problem.goalTest(front.getNodeState())) {

@@ -33,7 +33,7 @@ public class Grid implements State {
 		mCols = cols;
 		mCells = new Cell[rows][cols];
 		for(int i = 0; i < rows; i++) {
-			Arrays.fill(mCells[i], Cell.BLANK);
+			Arrays.fill(mCells[i], new Cell(CellType.BLANK));
 		}
 		set(sRow, sCol, initial);
 		mSRow = sRow;
@@ -95,16 +95,16 @@ public class Grid implements State {
 	 * 
 	 * @return the @Position of the last reachable cell from the initial cell
 	 */
-	public Position pathEnd() {
-		for(int r = mSRow, c = mSCol, p = r, q = c;;) {
+	public Position pathEnd(int startRow, int startCol) {
+		for(int r = startRow, c = startCol, p = r, q = c, len = 1;;) {
 			Cell current = get(r, c);
 			for(int k = 0; k <= GridConfig.DIRECTIONS; k++) {
 				// If we have no direction to move in
 				if (k == GridConfig.DIRECTIONS) {
-					return new Position(r, c);
+					return new Position(r, c, len);
 				}
 				// If cell (r, c) is not open from this direction
-				if (!GridConfig.cellOpen(current, k)) {
+				if (!GridConfig.cellOpen(current.getType(), k)) {
 					continue;
 				}
 				int nextR = r + GridConfig.deltaRow(k);
@@ -115,7 +115,7 @@ public class Grid implements State {
 				}
 				Cell next = get(nextR, nextC);
 				// If the target cell is not open from the opposite side
-				if (!GridConfig.cellOppositeOpen(next, k)) {
+				if (!GridConfig.cellOppositeOpen(next.getType(), k)) {
 					continue;
 				}
 				p = r;
@@ -140,8 +140,49 @@ public class Grid implements State {
 	 * @return A boolean equal to true if the initial cell and goal cell are connected by a path.
 	 */
 	public boolean isSolved() {
-		Position end = pathEnd();
+		Position end = pathEnd(mSRow, mSCol);
 		return end.row == mGRow && end.col == mGCol;
+	}
+	
+	public int getManhattanDistance() {
+		Position reachFromStart = pathEnd(mSRow, mSCol);
+		return Math.abs(mGRow - reachFromStart.row) + Math.abs(mGCol - reachFromStart.col);
+	}
+	
+	public int getHammingDistance() {
+		Position reachFromStart = pathEnd(mSRow, mSCol);
+		Position reachFromGoal = pathEnd(mGRow, mGCol);
+		return mRows * mCols - (reachFromStart.len + reachFromGoal.len);
+	}
+	
+	public int getTurnsNeeded() {
+		Position reached = pathEnd(mSRow, mSCol);
+		CellType endType = get(mGRow, mGCol).getType();
+		if (reached.row != mGRow && reached.col != mGCol) {
+			if (
+					((reached.row < mGRow && reached.col > mGCol) && (endType == CellType.END_R || endType == CellType.END_U)) ||
+					((reached.row < mGRow && reached.col < mGCol) && (endType == CellType.END_L || endType == CellType.END_U)) ||
+					((reached.row > mGRow && reached.col < mGCol) && (endType == CellType.END_L || endType == CellType.END_D)) ||
+					((reached.row > mGRow && reached.col > mGCol) && (endType == CellType.END_R || endType == CellType.END_D))) {
+				return 1;
+			}
+			return 2;
+		} else {
+			if (
+					(reached.col > mGCol && endType == CellType.END_L) ||
+					(reached.col < mGCol && endType == CellType.END_R) ||
+					(reached.row > mGRow && endType == CellType.END_U) ||
+					(reached.row > mGRow && endType == CellType.END_D)) {
+				return 3;
+			} else if (
+					(reached.col > mGCol && endType != CellType.END_R) ||
+					(reached.col < mGCol && endType != CellType.END_L) ||
+					(reached.row > mGRow && endType != CellType.END_D) ||
+					(reached.row > mGRow && endType != CellType.END_U)) {
+				return 2;
+			}
+		}
+		return 0;
 	}
 	
 	public String toString() {
@@ -154,7 +195,7 @@ public class Grid implements State {
 			result += "\n";
 			result += GridConfig.BORDER_CHAR;
 			for (int j = 0; j < mCols; j++) {
-				result += GridConfig.getRepresentation(mCells[i][j]);
+				result += GridConfig.getRepresentation(mCells[i][j].getType());
 			}
 			result += GridConfig.BORDER_CHAR;
 		}
