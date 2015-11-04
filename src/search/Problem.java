@@ -1,29 +1,22 @@
 package search;
 
-import java.util.Set;
-
 import search.space.Node;
 import search.space.Operator;
 import search.space.State;
 
-/**
- * @author nouran
- *
- */
 public abstract class Problem {
 	private Operator[] mOperators;
 	private State mInitState;
-	private Set<State> mStateSpace;
+	private Node mInitNode;
+	private StateSpace mStateSpace = new StateSpace();
 
-	public Problem(Operator[] operators, State initState, Set<State> stateSpace) {
-		setOperators(operators);
+	public Problem(State initState) {
 		setInitState(initState);
-		setStateSpace(stateSpace);
 	}
 
 	public abstract boolean goalTest(State currState);
 
-	public abstract int pathCost(State currState);
+	public abstract int pathCost(Node node);
 
 	public Operator[] getOperators() {
 		return mOperators;
@@ -39,16 +32,19 @@ public abstract class Problem {
 
 	public void setInitState(State initState) {
 		mInitState = initState;
+		mInitNode = new Node(mInitState);
 	}
 	
-	public abstract Node getInitNode();
-
-	public Set<State> getStateSpace() {
-		return mStateSpace;
+	public Node getInitNode() {
+		return mInitNode;
 	}
 
-	public void setStateSpace(Set<State> stateSpace) {
-		mStateSpace = stateSpace;
+	public void addToStateSpace(State state) {
+		mStateSpace.add(state);
+	}
+	
+	public boolean stateSpaceContains(State state) {
+		return mStateSpace.contains(state);
 	}
 
 }

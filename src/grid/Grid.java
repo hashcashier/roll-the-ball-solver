@@ -17,6 +17,25 @@ public class Grid implements State {
 	 */
 	private Cell[][] mCells;
 	
+	private Grid(int rows, int cols, int gRow, int gCol, int sRow, int sCol) {
+		mRows = rows;
+		mCols = cols;
+		mSRow = sRow;
+		mSCol = sCol;
+		mGRow = gRow;
+		mGCol = gCol;
+	}
+	
+	public Grid(Grid grid) {
+		this(grid.getRows(), grid.getCols(), grid.getGRow(), grid.getGCol(), grid.getSRow(), grid.getSCol());
+		mCells = new Cell[mRows][mCols];
+		for (int i = 0; i < mRows; i++) {
+			for (int j = 0; j < mCols; j++) {
+				mCells[i][j] = grid.get(i, j);
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 * @param rows
@@ -29,18 +48,13 @@ public class Grid implements State {
 	 * @param soal
 	 */
 	public Grid(int rows, int cols, Cell initial, int gRow, int gCol, Cell goal, int sRow, int sCol) {
-		mRows = rows;
-		mCols = cols;
+		this(rows, cols, gRow, gCol, sRow, sCol);
 		mCells = new Cell[rows][cols];
 		for(int i = 0; i < rows; i++) {
 			Arrays.fill(mCells[i], new Cell(CellType.BLANK));
 		}
 		set(sRow, sCol, initial);
-		mSRow = sRow;
-		mSCol = sCol;
 		set(gRow, gCol, goal);
-		mGRow = gRow;
-		mGCol = gCol;
 	}
 
 	public int getRows() {
@@ -85,7 +99,7 @@ public class Grid implements State {
 	 * @return @Cell at (row, col) in mCells
 	 */
 	public Cell get(int row, int col) {
-		if (row < mRows && col < mCols) {
+		if (inRange(row, col)) {
 			return mCells[row][col];
 		}
 		return null;
@@ -100,7 +114,7 @@ public class Grid implements State {
 			Cell current = get(r, c);
 			for(int k = 0; k <= GridConfig.DIRECTIONS; k++) {
 				// If we have no direction to move in
-				if (k == GridConfig.DIRECTIONS) {
+				if (current == null || k == GridConfig.DIRECTIONS) {
 					return new Position(r, c, len);
 				}
 				// If cell (r, c) is not open from this direction
@@ -132,7 +146,7 @@ public class Grid implements State {
 	 * @param c cell column
 	 * @return true when @Cell (r, c) is within the grid range
 	 */
-	private boolean inRange(int r, int c) {
+	public boolean inRange(int r, int c) {
 		return 0 <= r && r < mRows && 0 <= c && c < mCols;
 	}
 	
@@ -204,5 +218,10 @@ public class Grid implements State {
 			result += "\nSOLVED";
 		}
 		return result;
+	}
+
+	@Override
+	public int compareTo(State o) {
+		return toString().compareTo(o.toString());
 	}
 }

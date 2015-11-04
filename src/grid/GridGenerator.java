@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GridGenerator {
-	public static int MAX_ROWS = 7;
-	public static int MAX_COLS = 7;
+	public static int MAX_ROWS = 5;
+	public static int MAX_COLS = 5;
 	
 	public static Grid genGrid() {
 		int rows = rand().nextInt(1, MAX_ROWS);
@@ -161,7 +161,8 @@ public class GridGenerator {
 				cellType = CellType.BLOCK;
 				break;
 			}
-			addCellToGrid(new Cell(cellType, rand().nextBoolean()), grid, posList);
+			boolean fixed = rand().nextInt(5) == 0 && cellType != CellType.BLOCK;
+			addCellToGrid(new Cell(cellType, fixed), grid, posList);
 		}
 		
 		return deltaRow <= 0 && deltaCol <= 0 && posList.size() >= 1;

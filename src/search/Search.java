@@ -15,6 +15,8 @@ public class Search {
 		queueStrategy.enqueue(queue, problem.getInitNode());
 		while (!queue.isEmpty()) {
 			Node front = queue.remove();
+//			System.out.println("SEEK:");
+//			System.out.println(front.getNodeState().toString());
 			if (problem.goalTest(front.getNodeState())) {
 				return new Solution(front.getPath(), totalExpandedNodesCount);
 			}

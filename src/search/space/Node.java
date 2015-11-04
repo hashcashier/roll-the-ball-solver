@@ -3,7 +3,7 @@ package search.space;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Node {
+public class Node {
 	private State mNodeState;
 	private Node mParentNode;
 	/**
@@ -24,12 +24,15 @@ public abstract class Node {
 		mPathCost = 0;
 	}
 
-	public Node(State nodeState, Node parentNode, Operator operatorApplied,
-			int nodeDepth, int pathCost) {
+	public Node(State nodeState, Node parentNode, Operator operatorApplied, int nodeDepth) {
 		setNodeState(nodeState);
 		mParentNode = parentNode;
 		mOperatorApplied = operatorApplied;
 		mNodeDepth = nodeDepth;
+	}
+
+	public Node(State nodeState, Node parentNode, Operator operatorApplied, int nodeDepth, int pathCost) {
+		this(nodeState, parentNode, operatorApplied, nodeDepth);
 		mPathCost = pathCost;
 	}
 
