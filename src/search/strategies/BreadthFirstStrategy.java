@@ -14,9 +14,4 @@ public class BreadthFirstStrategy extends Strategy {
 		return new LinkedList<Node>();
 	}
 
-	@Override
-	public void enqueue(Queue<Node> queue, List<Node> nodes) {
-		queue.addAll(nodes);
-	}
-
 }

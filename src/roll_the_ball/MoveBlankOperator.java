@@ -54,11 +54,6 @@ public class MoveBlankOperator extends Operator {
 				nextState.set(targetRow, targetCol, current);
 				nextState.set(i, j, target);
 				
-				if (mProblem.stateSpaceContains(nextState)) {
-					continue;
-				}
-				mProblem.addToStateSpace(nextState);
-				
 				Node nextNode = new Node(nextState, node, this, node.getNodeDepth() + 1);
 				nextNode.setPathCost(mProblem.pathCost(nextNode));
 				result.add(nextNode);

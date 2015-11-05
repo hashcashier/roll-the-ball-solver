@@ -1,5 +1,7 @@
 package search;
 
+import java.util.Collection;
+
 import search.space.Node;
 import search.space.Operator;
 import search.space.State;
@@ -43,8 +45,20 @@ public abstract class Problem {
 		mStateSpace.add(state);
 	}
 	
+	public void addToStateSpace(Collection<State> states) {
+		mStateSpace.addAll(states);
+	}
+
 	public boolean stateSpaceContains(State state) {
 		return mStateSpace.contains(state);
+	}
+	
+	public void clearStateSpace() {
+		mStateSpace.clear();
+	}
+	
+	public void removeFromStateSpace(State state) {
+		mStateSpace.remove(state);
 	}
 
 }

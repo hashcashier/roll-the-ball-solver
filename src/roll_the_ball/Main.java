@@ -48,6 +48,7 @@ public class Main {
 				for (Node node : result.getPath()) {
 					System.out.println(node.getNodeState().toString());
 				}
+				System.out.println(result.getPath().size() - 1 + " Steps");
 			}
 		}
 		return result;

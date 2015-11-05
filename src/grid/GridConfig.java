@@ -12,7 +12,7 @@ public class GridConfig {
 	 * 2 Left
 	 * 3 Down
 	 */
-	public static int DIRECTIONS = 4;
+	public static int DIRECTIONS = Direction.class.getEnumConstants().length;
 	public static char BORDER_CHAR = '░';
 	private static int CELL_TYPES = CellType.class.getEnumConstants().length;
 	private static boolean[][] OPEN;

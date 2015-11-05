@@ -17,9 +17,4 @@ public class AStarStrategy extends Strategy {
 		return new PriorityQueue<>(1, sComparator);
 	}
 
-	@Override
-	public void enqueue(Queue<Node> queue, List<Node> nodes) {
-		queue.addAll(nodes);
-	}
-
 }
