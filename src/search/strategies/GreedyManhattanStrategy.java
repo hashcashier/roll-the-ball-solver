@@ -12,14 +12,12 @@ import search.space.Node;
  */
 public class GreedyManhattanStrategy extends Strategy {
 	
-	private static ManhattanComparator sComparator = new ManhattanComparator();
-
 	/**
 	 * Use a priority queue with the @ManhattanComparator
 	 */
 	@Override
 	public Queue<Node> initialize() {
-		return new PriorityQueue<>(1, sComparator);
+		return new PriorityQueue<>(1, new ManhattanComparator(mProblem));
 	}
 
 }

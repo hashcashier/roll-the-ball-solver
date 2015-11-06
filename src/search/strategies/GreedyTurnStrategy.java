@@ -12,14 +12,12 @@ import search.space.Node;
  */
 public class GreedyTurnStrategy extends Strategy	 {
 
-	private static TurnComparator sComparator = new TurnComparator();
-
 	/**
 	 * Use a priority queue with the @TurnComparator
 	 */
 	@Override
 	public Queue<Node> initialize() {
-		return new PriorityQueue<>(1, sComparator);
+		return new PriorityQueue<>(1, new TurnComparator(mProblem));
 	}
 
 }

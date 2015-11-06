@@ -1,5 +1,6 @@
 package search.comparators;
 
+import search.Problem;
 import search.space.Node;
 import search.space.NodeComparator;
 
@@ -8,6 +9,10 @@ import search.space.NodeComparator;
  * H(N) is the misplaced tiles heuristic
  */
 public class HammingComparator extends NodeComparator {
+	
+	public HammingComparator(Problem problem) {
+		super(problem);
+	}
 
 	@Override
 	public int value(Node n) {

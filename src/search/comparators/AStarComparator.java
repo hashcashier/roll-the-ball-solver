@@ -1,5 +1,6 @@
 package search.comparators;
 
+import search.Problem;
 import search.space.Node;
 import search.space.NodeComparator;
 
@@ -9,10 +10,14 @@ import search.space.NodeComparator;
  * G(N) is the path cost to the node
  */
 public class AStarComparator extends NodeComparator{
+	
+	public AStarComparator(Problem problem) {
+		super(problem);
+	}
 
 	@Override
-	public int value(Node n) {
-		return n.getNodeState().getTurnsNeeded() + n.getPathCost();
+	public int value(Node node) {
+		return node.getNodeState().getTurnsNeeded() + mProblem.pathCost(node);
 	}
 
 }

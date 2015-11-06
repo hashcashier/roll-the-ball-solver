@@ -29,6 +29,6 @@ public class Test1 {
 	}
 	
 	public static void main(String[] args) {
-		Main.search(sGrid, "ID", true);
+		Main.search(sGrid, "AS", true);
 	}
 }

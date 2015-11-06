@@ -1,5 +1,6 @@
 package search.comparators;
 
+import search.Problem;
 import search.space.Node;
 import search.space.NodeComparator;
 
@@ -9,6 +10,10 @@ import search.space.NodeComparator;
  */
 
 public class ManhattanComparator extends NodeComparator {
+	
+	public ManhattanComparator(Problem problem) {
+		super(problem);
+	}
 	
 	@Override
 	public int value(Node n) {
