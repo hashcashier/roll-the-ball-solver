@@ -103,7 +103,8 @@ public class Main {
 		if (args.length > 0) {
 			searchStrategy = !colored ? args[0] : args.length > 1 ? args[1] : searchStrategy;
 		}
-		search(grid, searchStrategy, true);
+		Solution result = search(grid, searchStrategy, true);
+		System.out.println(result.getExpandedNodes() + " Expanded nodes.");
 	}
 
 }

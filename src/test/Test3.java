@@ -4,6 +4,7 @@ import grid.Cell;
 import grid.CellType;
 import grid.Grid;
 import roll_the_ball.Main;
+import search.Solution;
 
 public class Test3 {
 
@@ -35,6 +36,7 @@ public class Test3 {
 	}
 	
 	public static void main(String[] args) {
-		Main.search(sGrid, "BF", true);
+		Solution s = Main.search(sGrid, "GR1", true);
+		System.out.println(s.getExpandedNodes() + " Expanded Nodes.");
 	}
 }

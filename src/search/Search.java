@@ -24,11 +24,11 @@ public class Search {
 		queueStrategy.enqueue(queue, problem.getInitNode());
 		while (!queue.isEmpty()) {
 			Node front = queue.remove();
+			totalExpandedNodesCount++;
 			if (problem.goalTest(front.getNodeState())) {
 				return new Solution(front.getPath(), totalExpandedNodesCount);
 			}
 			List<Node> expanded = expand(front, problem.getOperators());
-			totalExpandedNodesCount += expanded.size();
 			queueStrategy.enqueue(queue, expanded);
 		}
 		return null;
