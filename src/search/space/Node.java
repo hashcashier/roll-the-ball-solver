@@ -3,14 +3,12 @@ package search.space;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Node ADT
+ */
 public class Node {
 	private State mNodeState;
 	private Node mParentNode;
-	/**
-	 * Operator takes 0 for up, 1 for right, 2 for left, 3 for down
-	 * we added -1 for the parent node, to be discussed
-	 * don't we need to specify the cell that the operator was applied on?!
-	 */
 	private Operator mOperatorApplied;
 	private int mNodeDepth;
 	private int mPathCost;
@@ -68,6 +66,9 @@ public class Node {
 		mPathCost = pathCost;
 	}
 	
+	/**
+	 * @return A list of nodes representing the path to the root.
+	 */
 	public List<Node> getPath() {
 		Node ptr = this;
 		LinkedList<Node> result = new LinkedList<>();

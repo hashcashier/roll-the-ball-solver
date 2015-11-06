@@ -2,11 +2,18 @@ package grid;
 
 import java.util.Arrays;
 
+/**
+ * A block movement configuration and grid styling container class.
+ */
 public class GridConfig {
 	/**
-	 * OPEN: A truth table for each cell type depicting if it is open from each direction.
-	 * DROW: A table depicting the change in row value for each direction.
-	 * DCOL: A table depicting the change in column value for each direction.
+	 * DIRECTIONS: The number of @Direction(s) a cell can move in.
+	 * BORDER_REP: The UTF-8 Character code representing the grid borders.
+	 * CELL_TYPES: The number of different possible @CellType(s) within a grid.
+	 * OPEN: A truth table for each @CellType depicting if it is open from each direction.
+	 * DROW: A table depicting the change in row value for each @Direction.
+	 * DCOL: A table depicting the change in column value for each @Direction.
+	 * REPRESENTATION: An array of UTF-8 representations of each possible grid @CellType.
 	 * 0 Up
 	 * 1 Right
 	 * 2 Left
@@ -57,26 +64,48 @@ public class GridConfig {
 		REPRESENTATION[CellType.PATH_UD.ordinal()] = "║";
 		REPRESENTATION[CellType.PATH_UL.ordinal()] = "╝";
 		REPRESENTATION[CellType.PATH_UR.ordinal()] = "╚";		
-}
+	}
 	
-	public static boolean cellOpen(CellType cell, int direction) {
-		return OPEN[cell.ordinal()][direction];
+	/**
+	 * @param cellType
+	 * @param direction
+	 * @return true if cells of cellType are open from the specified direction
+	 */
+	public static boolean cellOpen(CellType cellType, int direction) {
+		return OPEN[cellType.ordinal()][direction];
 	}
 
-	public static boolean cellOppositeOpen(CellType cell, int direction) {
-		return OPEN[cell.ordinal()][3 - direction];
+	/**
+	 * @param cellType
+	 * @param direction
+	 * @return true if cells of cellType are open from the direction opposite to the specified direction
+	 */
+	public static boolean cellOppositeOpen(CellType cellType, int direction) {
+		return OPEN[cellType.ordinal()][3 - direction];
 	}
 	
+	/**
+	 * @param direction
+	 * @return the change in row value when moving in the specified direction
+	 */
 	public static int deltaRow(int direction) {
 		return DROW[direction];
 	}
 	
+	/**
+	 * @param direction
+	 * @return the change in column value when moving in the specified direction
+	 */
 	public static int deltaCol(int direction) {
 		return DCOL[direction];
 	}
 	
-	public static String getRepresentation(CellType cell) {
-		return REPRESENTATION[cell.ordinal()];
+	/**
+	 * @param cellType
+	 * @return the UTF-8 representation of the @CellType
+	 */
+	public static String getRepresentation(CellType cellType) {
+		return REPRESENTATION[cellType.ordinal()];
 	}
 	
 }

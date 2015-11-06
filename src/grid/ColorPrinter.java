@@ -3,15 +3,21 @@ package grid;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * Prints colored output to the console window in UTF-8 encoding.
+ */
 public class ColorPrinter extends UTFPrinter {
 	public ColorPrinter(PrintStream out) throws UnsupportedEncodingException {
 		super(out);
 	}
 	
+	/**
+	 * Wrap a string in color tags before printing to the console.
+	 * @param color
+	 * @param str
+	 */
 	public void print(PrintColor color, String str) {
-		print(color.getColor());
-		print(str);
-		print(PrintColor.DEFAULT.getColor());
+		print(color.getColor() + str + PrintColor.DEFAULT.getColor());
 		flush();
 	}
 	
@@ -29,6 +35,6 @@ public class ColorPrinter extends UTFPrinter {
 	
 	@Override
 	public void close() {
-		
+		// Do nothing by default.
 	}
 }

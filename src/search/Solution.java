@@ -4,6 +4,9 @@ import java.util.List;
 
 import search.space.Node;
 
+/**
+ * Wrapper class for found solutions
+ */
 public class Solution {
 	private List<Node> mPath;
 	private int mExpandedNodes;

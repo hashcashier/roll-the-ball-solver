@@ -5,6 +5,9 @@ import java.util.HashSet;
 
 import search.space.State;
 
+/**
+ * Wrapper class for state hashing.
+ */
 public class StateSpace {
 	private HashSet<String> mSet = new HashSet<>();
 	
@@ -28,8 +31,8 @@ public class StateSpace {
 	
 	public void remove(State state) {
 		if (!mSet.remove(state.toString())) {
-			System.out.println("TERMINATED: STATE SPACE INVARIANT VIOLATED.");
-			System.exit(1);
+			System.out.println("WARNING: STATE SPACE INVARIANT VIOLATED.");
+//			System.exit(1);
 		}
 	}
 }

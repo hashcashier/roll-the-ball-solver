@@ -6,6 +6,9 @@ import java.util.Queue;
 
 import search.space.Node;
 
+/**
+ * Strategy ADT
+ */
 public abstract class Strategy {
 	protected Problem mProblem;
 	
@@ -15,7 +18,12 @@ public abstract class Strategy {
 		mProblem = problem;
 		return initialize();
 	}
-	
+
+	/**
+	 * Default behavior for BFS, Greedy and A*.
+	 * @param queue
+	 * @param nodes
+	 */
 	public void enqueue(Queue<Node> queue, List<Node> nodes) {
 		for (Node node : nodes) {
 			if (!mProblem.stateSpaceContains(node.getNodeState())) {
@@ -25,6 +33,11 @@ public abstract class Strategy {
 		}
 	}
 	
+	/**
+	 * Wrap single node in list and call implemented enqueue.
+	 * @param queue
+	 * @param node
+	 */
 	public void enqueue(Queue<Node> queue, Node node) {
 		LinkedList<Node> list = new LinkedList<>();
 		list.add(node);

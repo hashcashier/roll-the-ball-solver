@@ -1,5 +1,8 @@
 package grid;
 
+/**
+ * Blocks, Start/End Cells and Path Cells.
+ */
 public enum CellType {
 	BLANK,
 	END_L,

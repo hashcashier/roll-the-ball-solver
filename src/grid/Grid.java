@@ -5,16 +5,22 @@ import java.util.Arrays;
 
 import search.space.State;
 
+/**
+ * A Grid of Cells representing the current state of the game board.
+ */
 public class Grid implements State {
+	// Dimensions
 	private int mRows;
 	private int mCols;
+	// Goal Cell location
 	private int mGRow;
 	private int mGCol;
+	// Start Cell location
 	private int mSRow;
 	private int mSCol;
 	/**
 	 * Dimensions: mRows * mCols
-	 * Refer to @Cell enum
+	 * Refer to @Cell
 	 */
 	private Cell[][] mCells;
 	
@@ -27,6 +33,10 @@ public class Grid implements State {
 		mGCol = gCol;
 	}
 	
+	/**
+	 * Copy constructor. Clone referenced grid cells.
+	 * @param grid
+	 */
 	public Grid(Grid grid) {
 		this(grid.getRows(), grid.getCols(), grid.getSRow(), grid.getSCol(), grid.getGRow(), grid.getGCol());
 		mCells = new Cell[mRows][mCols];
@@ -38,7 +48,7 @@ public class Grid implements State {
 	}
 	
 	/**
-	 * 
+	 * Construct a new grid with specified goal and start cells.
 	 * @param rows
 	 * @param cols
 	 * @param initial
@@ -135,6 +145,7 @@ public class Grid implements State {
 				if (!GridConfig.cellOppositeOpen(next.getType(), k)) {
 					continue;
 				}
+				// Transition to next cell
 				p = r;
 				q = c;
 				r = nextR;
@@ -161,17 +172,34 @@ public class Grid implements State {
 		return end.row == mGRow && end.col == mGCol;
 	}
 	
+	/**
+	 * @return The Manhattan distance between the last cell the ball can reach from the start and the goal cell.
+	 */
 	public int getManhattanDistance() {
 		Position reachFromStart = pathEnd(mSRow, mSCol);
 		return Math.abs(mGRow - reachFromStart.row) + Math.abs(mGCol - reachFromStart.col);
 	}
 	
+	/**
+	 * @return The differences in row and column values between last reachable cell from start and goal
+	 */
+	public Position getManhattanComponents() {
+		Position reachFromStart = pathEnd(mSRow, mSCol);
+		return new Position(Math.abs(mGRow - reachFromStart.row), Math.abs(mGCol - reachFromStart.col));
+	}
+	
+	/**
+	 * @return The number of cells not contained within the paths connected to the start cell and the goal cell.
+	 */
 	public int getHammingDistance() {
 		Position reachFromStart = pathEnd(mSRow, mSCol);
 		Position reachFromGoal = pathEnd(mGRow, mGCol);
 		return mRows * mCols - (reachFromStart.len + reachFromGoal.len);
 	}
 	
+	/**
+	 * @return The minimum number of additional hinge path cells needed to get from the start cell to the goal cell.
+	 */
 	public int getTurnsNeeded() {
 		Position reached = pathEnd(mSRow, mSCol);
 		CellType endType = get(mGRow, mGCol).getType();
@@ -202,6 +230,9 @@ public class Grid implements State {
 		return 0;
 	}
 	
+	/**
+	 * @return A string representation of the board.
+	 */
 	public String toString() {
 		String border = "";
 		for (int i = 0; i < mCols + 2; i++) {
@@ -223,6 +254,9 @@ public class Grid implements State {
 		return result;
 	}
 	
+	/**
+	 * Prints the board to the console using a @ColorPrinter
+	 */
 	public void printInColor() {
 		ColorPrinter colorPrinter;
 		try {
@@ -244,9 +278,9 @@ public class Grid implements State {
 			for (int j = 0; j < mCols; j++) {
 				PrintColor color = mCells[i][j].getFixed() ? PrintColor.RED : PrintColor.DEFAULT;
 				if (i == mSRow && j == mSCol) {
-					color = PrintColor.PURPLE;
+					color = PrintColor.CYAN;
 				} else if (i == mGRow && j == mGCol) {
-					color = PrintColor.YELLOW;
+					color = PrintColor.GREEN;
 				}
 				colorPrinter.print(color, GridConfig.getRepresentation(mCells[i][j].getType()));
 			}
@@ -260,6 +294,9 @@ public class Grid implements State {
 		colorPrinter.close();
 	}
 
+	/**
+	 * For state space storage purposes.
+	 */
 	@Override
 	public int compareTo(State o) {
 		return toString().compareTo(o.toString());

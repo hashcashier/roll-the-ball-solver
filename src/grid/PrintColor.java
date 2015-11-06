@@ -1,5 +1,8 @@
 package grid;
 
+/**
+ * An enumerator for printable console colors.
+ */
 public enum PrintColor {
 	RED("\u001B[31m"),
 	GREEN("\u001B[32m"),

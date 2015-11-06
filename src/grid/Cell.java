@@ -1,5 +1,8 @@
 package grid;
 
+/**
+ * The building block of a grid. Specifies a @CellType and fixed status.
+ */
 public class Cell {
 	private CellType mType;
 	private boolean mFixed;
@@ -13,8 +16,14 @@ public class Cell {
 		mFixed = fixed;
 	}
 	
-	public void setFixed(boolean fixed) {
+	/**
+	 * Sets the fixed status of the Cell
+	 * @param fixed
+	 * @return a reference to this instance
+	 */
+	public Cell setFixed(boolean fixed) {
 		mFixed = fixed;
+		return this;
 	}
 	
 	public boolean getFixed() {

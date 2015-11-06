@@ -1,5 +1,8 @@
 package grid;
 
+/**
+ * A wrapper class for row, column and path length values.
+ */
 public class Position {
 	public int row, col, len;
 

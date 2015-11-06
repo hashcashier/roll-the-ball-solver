@@ -2,6 +2,9 @@ package search.space;
 
 import java.util.Comparator;
 
+/**
+ * Comparator ADT for priority queues.
+ */
 public abstract class NodeComparator implements Comparator<Node>{
 	
 	@Override

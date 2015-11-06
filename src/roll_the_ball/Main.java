@@ -18,9 +18,14 @@ import search.strategies.GreedyManhattanStrategy;
 import search.strategies.GreedyTurnStrategy;
 import search.strategies.IterativeDeepeningStrategy;
 
+/**
+ * The main executable for the project.
+ */
 public class Main {
-	
+
+	// Colored grid output. Needs ANSI Color friendly console.
 	private static boolean colored = false;
+	// UTF-8 Output writer
 	public static final PrintWriter out;
 	static {
 		PrintWriter writer;
@@ -32,12 +37,21 @@ public class Main {
 		out = writer;
 	}
 
+	/**
+	 * Combines concrete implementations of abstract components to solve the problem.
+	 * @param grid
+	 * @param strategy
+	 * @param visualize
+	 * @return A solution to the problem
+	 */
 	public static Solution search(Grid grid, String strategy, boolean visualize) {
+		// Output initial grid.
 		if (colored) {
 			grid.printInColor();
 		} else {
 			out.println(grid.toString());
 		}
+		// Decide on search strategy.
 		Strategy searchStrategy;
 		switch(strategy) {
 		case "BF":
@@ -60,8 +74,11 @@ public class Main {
 			searchStrategy = new AStarStrategy();
 			break;
 		}
+		// Initialize problem with grid
 		Problem problem = new RollTheBallProblem(grid);
+		// Search for solution
 		Solution result = Search.search(problem, searchStrategy);
+		// Output solution
 		if (visualize) {
 			if (result == null) {
 				out.println("UNSOLVABLE!");
