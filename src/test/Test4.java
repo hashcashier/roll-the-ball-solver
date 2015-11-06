@@ -53,7 +53,7 @@ public class Test4 {
 	}
 	
 	public static void main(String[] args) {
-		Solution s = Main.search(sGrid, "BF", true);
+		Solution s = Main.search(sGrid, "GR1", true);
 		System.out.println(s.getExpandedNodes() + " Expanded Nodes.");
 	}
 }

@@ -104,7 +104,9 @@ public class Main {
 			searchStrategy = !colored ? args[0] : args.length > 1 ? args[1] : searchStrategy;
 		}
 		Solution result = search(grid, searchStrategy, true);
-		System.out.println(result.getExpandedNodes() + " Expanded nodes.");
+		if (result != null) {
+			System.out.println(result.getExpandedNodes() + " Expanded nodes.");
+		}
 	}
 
 }
