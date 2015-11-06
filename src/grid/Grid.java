@@ -1,5 +1,6 @@
 package grid;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import search.space.State;
@@ -17,7 +18,7 @@ public class Grid implements State {
 	 */
 	private Cell[][] mCells;
 	
-	private Grid(int rows, int cols, int gRow, int gCol, int sRow, int sCol) {
+	private Grid(int rows, int cols, int sRow, int sCol, int gRow, int gCol) {
 		mRows = rows;
 		mCols = cols;
 		mSRow = sRow;
@@ -27,7 +28,7 @@ public class Grid implements State {
 	}
 	
 	public Grid(Grid grid) {
-		this(grid.getRows(), grid.getCols(), grid.getGRow(), grid.getGCol(), grid.getSRow(), grid.getSCol());
+		this(grid.getRows(), grid.getCols(), grid.getSRow(), grid.getSCol(), grid.getGRow(), grid.getGCol());
 		mCells = new Cell[mRows][mCols];
 		for (int i = 0; i < mRows; i++) {
 			for (int j = 0; j < mCols; j++) {
@@ -41,20 +42,22 @@ public class Grid implements State {
 	 * @param rows
 	 * @param cols
 	 * @param initial
+	 * @param sCol
+	 * @param goal
 	 * @param gRow
 	 * @param gCol
-	 * @param goal
-	 * @param sCol
 	 * @param soal
 	 */
-	public Grid(int rows, int cols, Cell initial, int gRow, int gCol, Cell goal, int sRow, int sCol) {
-		this(rows, cols, gRow, gCol, sRow, sCol);
+	public Grid(int rows, int cols, Cell initial, int sRow, int sCol, Cell goal, int gRow, int gCol) {
+		this(rows, cols, sRow, sCol, gRow, gCol);
 		mCells = new Cell[rows][cols];
 		for(int i = 0; i < rows; i++) {
 			Arrays.fill(mCells[i], new Cell(CellType.BLANK));
 		}
 		set(sRow, sCol, initial);
 		set(gRow, gCol, goal);
+		initial.setFixed(true);
+		goal.setFixed(true);
 	}
 
 	public int getRows() {
@@ -202,22 +205,59 @@ public class Grid implements State {
 	public String toString() {
 		String border = "";
 		for (int i = 0; i < mCols + 2; i++) {
-			border += GridConfig.BORDER_CHAR;
+			border += GridConfig.BORDER_REP;
 		}
 		String result = border;
 		for (int i = 0; i < mRows; i++) {
 			result += "\n";
-			result += GridConfig.BORDER_CHAR;
+			result += GridConfig.BORDER_REP;
 			for (int j = 0; j < mCols; j++) {
 				result += GridConfig.getRepresentation(mCells[i][j].getType());
 			}
-			result += GridConfig.BORDER_CHAR;
+			result += GridConfig.BORDER_REP;
 		}
 		result += "\n" + border;
 		if (isSolved()) {
 			result += "\nSOLVED";
 		}
 		return result;
+	}
+	
+	public void printInColor() {
+		ColorPrinter colorPrinter;
+		try {
+			colorPrinter = new ColorPrinter(System.out);
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("WARNING: Your console does not support UTF-8 encoding.");
+			System.out.println("WARNING: Grids will be printed in black color only.");
+			System.out.println(toString());
+			return;
+		}
+		String border = "";
+		for (int i = 0; i < mCols + 2; i++) {
+			border += GridConfig.BORDER_REP;
+		}
+		colorPrinter.print(border);
+		for (int i = 0; i < mRows; i++) {
+			colorPrinter.print("\n");
+			colorPrinter.print(GridConfig.BORDER_REP);
+			for (int j = 0; j < mCols; j++) {
+				PrintColor color = mCells[i][j].getFixed() ? PrintColor.RED : PrintColor.DEFAULT;
+				if (i == mSRow && j == mSCol) {
+					color = PrintColor.PURPLE;
+				} else if (i == mGRow && j == mGCol) {
+					color = PrintColor.YELLOW;
+				}
+				colorPrinter.print(color, GridConfig.getRepresentation(mCells[i][j].getType()));
+			}
+			colorPrinter.print(GridConfig.BORDER_REP);
+		}
+		colorPrinter.print("\n" + border + "\n");
+		if (isSolved()) {
+			colorPrinter.green("SOLVED GRID\n");
+		}
+		colorPrinter.flush();
+		colorPrinter.close();
 	}
 
 	@Override

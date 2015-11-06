@@ -31,7 +31,7 @@ public class GridGenerator {
 		}
 		goal.setFixed(true);
 		
-		Grid grid = new Grid(rows, cols, initial, gRow, gCol, goal, sRow, sCol);
+		Grid grid = new Grid(rows, cols, initial, sRow, sCol, goal, gRow, gCol);
 		
 		if (!generateGridBody(grid)) {
 			return genGrid();

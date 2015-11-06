@@ -19,8 +19,7 @@ public class DepthFirstStrategy extends Strategy {
 		LinkedList<Node> simulatedStack = (LinkedList<Node>) queue;
 
 		if (nodes.isEmpty()) {
-			System.err.println("TERMINATED: NON-EMPTY ENQUEUE INVARIANT VIOLATED");
-			System.exit(1);
+			return;
 		}
 		
 		Node n = nodes.get(0);

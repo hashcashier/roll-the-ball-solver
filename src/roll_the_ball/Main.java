@@ -1,7 +1,11 @@
 package roll_the_ball;
 
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 import grid.Grid;
 import grid.GridGenerator;
+import grid.UTFPrinter;
 import search.Problem;
 import search.Search;
 import search.Solution;
@@ -15,8 +19,25 @@ import search.strategies.GreedyTurnStrategy;
 import search.strategies.IterativeDeepeningStrategy;
 
 public class Main {
+	
+	private static boolean colored = false;
+	public static final PrintWriter out;
+	static {
+		PrintWriter writer;
+		try {
+			writer = new UTFPrinter(System.out);
+		} catch (UnsupportedEncodingException e) {
+			writer = new PrintWriter(System.out);
+		}
+		out = writer;
+	}
 
 	public static Solution search(Grid grid, String strategy, boolean visualize) {
+		if (colored) {
+			grid.printInColor();
+		} else {
+			out.println(grid.toString());
+		}
 		Strategy searchStrategy;
 		switch(strategy) {
 		case "BF":
@@ -43,21 +64,29 @@ public class Main {
 		Solution result = Search.search(problem, searchStrategy);
 		if (visualize) {
 			if (result == null) {
-				System.out.println("UNSOLVABLE!");
+				out.println("UNSOLVABLE!");
 			} else {
 				for (Node node : result.getPath()) {
-					System.out.println(node.getNodeState().toString());
+					if (colored) {
+						((Grid) node.getNodeState()).printInColor();
+					} else {
+						out.println(node.getNodeState().toString());
+					}
 				}
-				System.out.println(result.getPath().size() - 1 + " Steps");
+				out.println(result.getPath().size() - 1 + " Steps");
 			}
 		}
 		return result;
 	}
 	
 	public static void main(String[] args) {
+		colored = args.length > 0 && args[0].equals("color");
 		Grid grid = GridGenerator.genGrid();
-		System.out.println(grid.toString());
-		search(grid, "BF", true);
+		String searchStrategy = "BF";
+		if (args.length > 0) {
+			searchStrategy = !colored ? args[0] : args.length > 1 ? args[1] : searchStrategy;
+		}
+		search(grid, searchStrategy, true);
 	}
 
 }

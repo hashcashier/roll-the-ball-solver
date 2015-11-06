@@ -13,12 +13,12 @@ public class GridConfig {
 	 * 3 Down
 	 */
 	public static int DIRECTIONS = Direction.class.getEnumConstants().length;
-	public static char BORDER_CHAR = '░';
+	public static String BORDER_REP = "░";
 	private static int CELL_TYPES = CellType.class.getEnumConstants().length;
 	private static boolean[][] OPEN;
 	private static int[] DROW;
 	private static int[] DCOL;
-	private static char[] REPRESENTATION;
+	private static String[] REPRESENTATION;
 	static {
 		OPEN = new boolean[CELL_TYPES][DIRECTIONS];
 		for (int i = 0; i < CELL_TYPES; i++) {
@@ -44,19 +44,19 @@ public class GridConfig {
 		DROW = new int[]{-1, 0, 0, 1};
 		DCOL = new int[]{0, 1, -1, 0};
 
-		REPRESENTATION = new char[CELL_TYPES];
-		REPRESENTATION[CellType.BLANK.ordinal()] = ' ';
-		REPRESENTATION[CellType.BLOCK.ordinal()] = '■';
-		REPRESENTATION[CellType.END_U.ordinal()] = '╨';
-		REPRESENTATION[CellType.END_R.ordinal()] = '╞';
-		REPRESENTATION[CellType.END_L.ordinal()] = '╡';
-		REPRESENTATION[CellType.END_D.ordinal()] = '╥';
-		REPRESENTATION[CellType.PATH_DL.ordinal()] = '╗';
-		REPRESENTATION[CellType.PATH_LR.ordinal()] = '═';
-		REPRESENTATION[CellType.PATH_RD.ordinal()] = '╔';
-		REPRESENTATION[CellType.PATH_UD.ordinal()] = '║';
-		REPRESENTATION[CellType.PATH_UL.ordinal()] = '╝';
-		REPRESENTATION[CellType.PATH_UR.ordinal()] = '╚';		
+		REPRESENTATION = new String[CELL_TYPES];
+		REPRESENTATION[CellType.BLANK.ordinal()] = " ";
+		REPRESENTATION[CellType.BLOCK.ordinal()] = "■";
+		REPRESENTATION[CellType.END_U.ordinal()] = "╨";
+		REPRESENTATION[CellType.END_R.ordinal()] = "╞";
+		REPRESENTATION[CellType.END_L.ordinal()] = "╡";
+		REPRESENTATION[CellType.END_D.ordinal()] = "╥";
+		REPRESENTATION[CellType.PATH_DL.ordinal()] = "╗";
+		REPRESENTATION[CellType.PATH_LR.ordinal()] = "═";
+		REPRESENTATION[CellType.PATH_RD.ordinal()] = "╔";
+		REPRESENTATION[CellType.PATH_UD.ordinal()] = "║";
+		REPRESENTATION[CellType.PATH_UL.ordinal()] = "╝";
+		REPRESENTATION[CellType.PATH_UR.ordinal()] = "╚";		
 }
 	
 	public static boolean cellOpen(CellType cell, int direction) {
@@ -75,7 +75,7 @@ public class GridConfig {
 		return DCOL[direction];
 	}
 	
-	public static char getRepresentation(CellType cell) {
+	public static String getRepresentation(CellType cell) {
 		return REPRESENTATION[cell.ordinal()];
 	}
 	
