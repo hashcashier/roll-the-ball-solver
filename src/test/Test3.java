@@ -36,7 +36,7 @@ public class Test3 {
 	}
 	
 	public static void main(String[] args) {
-		Solution s = Main.search(sGrid, "GR1", true);
+		Solution s = Main.search(sGrid, "AS", true);
 		System.out.println(s.getExpandedNodes() + " Expanded Nodes.");
 	}
 }
