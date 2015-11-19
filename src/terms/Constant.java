@@ -1,11 +1,11 @@
-package folSymbols;
+package terms;
 
-import folExpressions.Term;
+import expressions.Term;
 
 public class Constant extends Term {
 	
 	public Constant(String constant) {
-		super(constant);
+		super(0, null, constant);
 	}
 	
 	
