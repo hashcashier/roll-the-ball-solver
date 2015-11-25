@@ -1,8 +1,12 @@
 eclipse.preferences.version=1
+encoding//src/expressions/test/Test6.java=UTF-8
+encoding//src/expressions/test/Test7.java=UTF-8
 encoding//src/grid/Grid.java=UTF-8
 encoding//src/grid/GridConfig.java=UTF-8
 encoding//src/grid/GridGenerator.java=UTF-8
-encoding//src/test/Test1.java=UTF-8
-encoding//src/test/Test2.java=UTF-8
-encoding//src/test/Test3.java=UTF-8
-encoding//src/test/Test4.java=UTF-8
+encoding//src/grid/test/Test1.java=UTF-8
+encoding//src/grid/test/Test2.java=UTF-8
+encoding//src/grid/test/Test3.java=UTF-8
+encoding//src/grid/test/Test4.java=UTF-8
+encoding//src/sentences/Connector.java=UTF-8
+encoding//src/sentences/Quantifier.java=UTF-8

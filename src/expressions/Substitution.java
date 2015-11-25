@@ -15,14 +15,36 @@ public class Substitution {
 	}
 	
 	public Substitution set(Variable v, Term t) {
-		mMap.put(v, t);
-		resolveChains();
+		if (!(t instanceof Variable) || (mMap.get(t) == null || mMap.get(mMap.get(t)) != v)) {
+			mMap.put(v, t);
+		}
+		
+		boolean change = true;
+		while(change) {
+			change = false;
+			for (Variable U : mMap.keySet()) {
+				for (Entry<Variable, Term> entry : mMap.entrySet()) {
+					Variable V = entry.getKey();
+					Term T = entry.getValue();
+					String mem = T.toString();
+					if (U.occursIn(T)) {
+						Term TT = (Term) Unifier.substitute(this, T);
+						mMap.put(V,  TT);
+						if (!TT.toString().equals(mem)) {
+							change = true;
+						}
+					}
+				}
+			}
+		}
 		return this;
 	}
 	
-	private void resolveChains() {
-		for (Entry<Variable, Term> entry : mMap.entrySet()) {
-			// expand graph
+	public String toString() {
+		String res = this == FAILURE ? "FAIL!" : "";
+		for(Entry<Variable, Term> entry : mMap.entrySet()) {
+			res += "{" + entry.getKey().toString() + " ==> " + entry.getValue().toString() + " } ";
 		}
+		return res;
 	}
 }

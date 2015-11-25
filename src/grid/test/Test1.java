@@ -1,4 +1,4 @@
-package test;
+package grid.test;
 
 import grid.Cell;
 import grid.CellType;
@@ -10,7 +10,7 @@ public class Test1 {
 
 	/* 4 Step Solution
 	 ░░░░░░
-	 ░═  ═░
+	 ░�?  �?░
 	 ░╞  ╡░
 	 ░░░░░░
 	 */

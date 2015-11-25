@@ -1,4 +1,4 @@
-package test;
+package grid.test;
 
 import grid.Cell;
 import grid.CellType;
@@ -10,11 +10,11 @@ public class Test4 {
 
 	/* 15 Step Solution
 		░░░░░░░
-		░╞  ╗╝░
-		░══╥╝╝░
+		░╞  ╗�?░
+		░�?�?╥�?�?░
 		░■■║║ ░
-		░ ═║═■░
-		░╗╚ ║═░
+		░ �?║�?■░
+		░╗╚ ║�?░
 		░░░░░░░
 	 */
 	private static Grid sGrid = new Grid(

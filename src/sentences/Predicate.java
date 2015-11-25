@@ -11,5 +11,4 @@ public class Predicate extends Sentence{
 	public Term[] getChildren() {
 		return (Term[]) super.getChildren();
 	}
-
 }

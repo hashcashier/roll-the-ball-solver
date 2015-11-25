@@ -10,6 +10,14 @@ public class Variable extends Term{
 	}
 
 	public boolean occursIn(Expression e) {
+		if (e == this) {
+			return true;
+		}
+		for (int i = 0; i < e.getArity(); i++) {
+			if (occursIn(e.getChildren()[i]))
+				return true;
+		}
 		return false;
 	}
+	
 }

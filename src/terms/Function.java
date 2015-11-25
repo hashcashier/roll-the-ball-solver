@@ -1,6 +1,7 @@
 package terms;
 
 import expressions.Term;
+import sun.security.action.GetBooleanSecurityPropertyAction;
 
 public class Function extends Term {
 
@@ -11,5 +12,4 @@ public class Function extends Term {
 	public Term[] getChildren() {
 		return (Term[]) super.getChildren();
 	}
-
 }
