@@ -9,9 +9,14 @@ import terms.Function;
 import terms.Variable;
 
 public class Unifier {
+
+	public static Substitution unify(Expression E1, Expression E2, boolean trace) {
+		return unify1(E1, E2, new Substitution(), trace);
+	}
 	
+
 	public static Substitution unify(Expression E1, Expression E2) {
-		return unify1(E1, E2, new Substitution());
+		return unify(E1, E2, false);
 	}
 	
 	private static LinkedList<Expression> listify(Expression e) {
@@ -30,16 +35,18 @@ public class Unifier {
 		return result;
 	}
 	
-	private static Substitution unify1(Expression E1, Expression E2, Substitution mu) {
-//		System.out.println("UNIFY: " + E1.toString() + " WITH " + E2.toString() + " USING " + mu.toString());
+	private static Substitution unify1(Expression E1, Expression E2, Substitution mu, boolean trace) {
+		if (trace) {
+			System.out.println("UNIFY: " + E1.toString() + " WITH " + E2.toString() + " USING " + mu.toString());			
+		}
 		if (mu == Substitution.FAILURE) {
 			return Substitution.FAILURE;
 		} else if (E1 == E2) {
 			return mu;
 		} else if(E1 instanceof Variable && E2 instanceof Term) {
-			return unifyVar((Variable) E1, (Term) E2, mu);
+			return unifyVar((Variable) E1, (Term) E2, mu, trace);
 		} else if(E2 instanceof Variable && E1 instanceof Term) {
-			return unifyVar((Variable) E2, (Term) E1, mu);
+			return unifyVar((Variable) E2, (Term) E1, mu, trace);
 		} else if(E1 instanceof Constant && E2 instanceof Constant) {
 			return E1.equals(E2) ? mu : Substitution.FAILURE;
 		} else if(E1 instanceof Variable && E2 instanceof Expression) {
@@ -48,11 +55,13 @@ public class Unifier {
 			return Substitution.FAILURE;
 		}
 		
-		return unify1(listify(E1), listify(E2), mu);
+		return unify1(listify(E1), listify(E2), mu, trace);
 	}
 	
-	private static Substitution unify1(LinkedList<Expression> E1, LinkedList<Expression> E2, Substitution mu) {
-//		System.out.println("UNIFY: " + E1.toString() + " WITH " + E2.toString() + " USING " + mu.toString());
+	private static Substitution unify1(LinkedList<Expression> E1, LinkedList<Expression> E2, Substitution mu, boolean trace) {
+		if (trace) {
+			System.out.println("UNIFY (lists): " + E1.toString() + " WITH " + E2.toString() + " USING " + mu.toString());
+		}
 		if (mu == Substitution.FAILURE) {
 			return Substitution.FAILURE;
 		} else if(E1.size() != E2.size()) {
@@ -61,22 +70,29 @@ public class Unifier {
 			return mu;
 		}
 		
-		return unify1(E1, E2, unify1(E1.removeFirst(), E2.removeFirst(), mu));
+		return unify1(E1, E2, unify1(E1.removeFirst(), E2.removeFirst(), mu, trace), trace);
 	}
 	
-	private static Substitution unifyVar(Variable v, Term e, Substitution mu) {
+	private static Substitution unifyVar(Variable v, Term e, Substitution mu, boolean trace) {
+		if (trace) {
+			System.out.println("UNIFY VAR: " + v.toString() + " WITH " + e.toString() + " USING " + mu.toString());
+		}
 		Term t = mu.get(v);
 		if (t != null && t != v) {
-			return unify1(t, e, mu);
+			return unify1(t, e, mu, trace);
 		}
-		t = (Term) substitute(mu, e);
+		t = (Term) substitute(mu, e, trace);
 		if (v.occursIn(t)) {
 			return Substitution.FAILURE;
 		}
-		return mu.set(v, t);
+		return mu.set(v, t, trace);
 	}
 	
-	public static Expression substitute(Substitution mu, Expression e) {
+	public static Expression substitute(Substitution mu, Expression e, boolean trace) {
+		if (trace) {
+			System.out.println("SUBSTITUTE: " + e.toString() + " USING " + mu.toString());
+		}
+		
 		Expression[] children = e.getChildren();
 		
 		if (e instanceof Variable) {
@@ -94,7 +110,7 @@ public class Unifier {
 					children[i] = replacement;
 				}
 			} else if (child.getArity() > 0) {
-				substitute(mu, child);
+				substitute(mu, child, trace);
 			}
 		}
 		return e;

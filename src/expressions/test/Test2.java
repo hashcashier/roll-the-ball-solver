@@ -25,7 +25,7 @@ public class Test2 {
 		Function g1 = new Function(6, new Term[]{v, w, x, y, z, w}, "G");
 		Function g2 = new Function(6, new Term[]{w, x, y, z, x, A}, "G");
 		
-		Substitution s = Unifier.unify(g1, g2);
+		Substitution s = Unifier.unify(g1, g2, true);
 		System.out.println(s);
 	}
 

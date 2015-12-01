@@ -14,7 +14,10 @@ public class Substitution {
 		return mMap.get(v);
 	}
 	
-	public Substitution set(Variable v, Term t) {
+	public Substitution set(Variable v, Term t, boolean trace) {
+		if (trace) {
+			System.out.println("SET " + v.toString() + " TO " + t.toString() + " IN " + toString());
+		}
 		if (!(t instanceof Variable) || (mMap.get(t) == null || mMap.get(mMap.get(t)) != v)) {
 			mMap.put(v, t);
 		}
@@ -28,7 +31,7 @@ public class Substitution {
 					Term T = entry.getValue();
 					String mem = T.toString();
 					if (U.occursIn(T)) {
-						Term TT = (Term) Unifier.substitute(this, T);
+						Term TT = (Term) Unifier.substitute(this, T, trace);
 						mMap.put(V,  TT);
 						if (!TT.toString().equals(mem)) {
 							change = true;
