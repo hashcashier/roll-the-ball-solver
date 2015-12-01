@@ -76,7 +76,6 @@ public class ClauseFormer {
 		System.out.print("{");
 		int seen = 0;
 		for (Sentence disj : (Sentence[]) conjNF.getChildren()) {
-
 			HashSet<Variable> seenHere = new HashSet<>();
 			disj = standardize(disj, seen, seenHere);
 			seen += seenHere.size();
@@ -91,7 +90,7 @@ public class ClauseFormer {
 					b = true;
 				}
 			} else {
-				System.out.println(disj);
+				System.out.print(disj);
 			}
 			System.out.print("}");
 			a = true;
@@ -260,7 +259,7 @@ public class ClauseFormer {
 			}
 			return cpy;
 		}
-		return null;
+		return t;
 	}
 
 	private static Expression standardize(Expression e, Map<Variable, Variable> map, Set<Expression> done) {

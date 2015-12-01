@@ -1,5 +1,6 @@
 package expressions.test;
 
+import expressions.ClauseFormer;
 import expressions.Term;
 import sentences.Connector;
 import sentences.Connector.Type;
@@ -20,7 +21,9 @@ public class Test6 {
 		Quantifier xU = new Quantifier(Quantifier.Type.UNIVERSAL, x2, qp);
 		Connector pxU = new Connector(Type.CONJUNCTION, px1, xU);
 		Quantifier xE = new Quantifier(Quantifier.Type.EXISTENTIAL, x1, pxU);
+		
 		System.out.println(xE);
+		System.out.println(ClauseFormer.clauseForm(xE, true));
 	}
 
 }
