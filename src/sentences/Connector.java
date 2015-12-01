@@ -21,11 +21,21 @@ public class Connector extends Sentence  {
 		mType = t;
 	}
 	
+	public Connector(Type t, int arity, Sentence[] sentences) {
+		super(arity, sentences, null);
+		mType = t;
+	}
+	
 	public Type getType() {
 		return mType;
 	}
 	
 	public String toString() {
-		return "(" + getChildren()[0].toString() + mType.getSymbol() + getChildren()[1].toString() + ")";
+		String res = "";
+		for (int i = 0; i < getArity(); i++) {
+			if (i > 0) res += mType.getSymbol();
+			res += getChildren()[i].toString();
+		}
+		return "(" + res + ")";
 	}
 }

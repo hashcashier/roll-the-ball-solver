@@ -14,12 +14,12 @@ public class Test1 {
 		Variable y = new Variable("y");
 		Variable z = new Variable("z");
 		
-		Constant A = new Constant("A");
+//		Constant A = new Constant("A");
 		Constant B = new Constant("B");
-		Constant C = new Constant("C");
+//		Constant C = new Constant("C");
 		
-		Function f1 = new Function(1, new Term[]{x}, "F");
-		Function f2 = new Function(1, new Term[]{y}, "F");
+//		Function f1 = new Function(1, new Term[]{x}, "F");
+//		Function f2 = new Function(1, new Term[]{y}, "F");
 		
 		Function g1 = new Function(4, new Term[]{x, y, x, y}, "G");
 		Function g2 = new Function(4, new Term[]{y, z, x, B}, "G");

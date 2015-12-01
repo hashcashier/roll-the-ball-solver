@@ -3,22 +3,21 @@ package expressions.test;
 import expressions.Substitution;
 import expressions.Term;
 import expressions.Unifier;
-import terms.Constant;
 import terms.Function;
 import terms.Variable;
 
 public class Test5 {
 	public static void main(String[] args) {
 		Variable u = new Variable("u");
-		Variable v = new Variable("v");
-		Variable w = new Variable("w");
+//		Variable v = new Variable("v");
+//		Variable w = new Variable("w");
 		Variable x = new Variable("x");
-		Variable y = new Variable("y");
+//		Variable y = new Variable("y");
 		Variable z = new Variable("z");
 		
-		Constant A = new Constant("A");
-		Constant B = new Constant("B");
-		Constant C = new Constant("C");
+//		Constant A = new Constant("A");
+//		Constant B = new Constant("B");
+//		Constant C = new Constant("C");
 		
 		Function gu = new Function(1, new Term[]{u}, "G");
 		Function gz = new Function(1, new Term[]{z}, "G");

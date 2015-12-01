@@ -16,11 +16,11 @@ public class Test2 {
 		Variable z = new Variable("z");
 		
 		Constant A = new Constant("A");
-		Constant B = new Constant("B");
-		Constant C = new Constant("C");
+//		Constant B = new Constant("B");
+//		Constant C = new Constant("C");
 		
-		Function f1 = new Function(1, new Term[]{x}, "F");
-		Function f2 = new Function(1, new Term[]{y}, "F");
+//		Function f1 = new Function(1, new Term[]{x}, "F");
+//		Function f2 = new Function(1, new Term[]{y}, "F");
 		
 		Function g1 = new Function(6, new Term[]{v, w, x, y, z, w}, "G");
 		Function g2 = new Function(6, new Term[]{w, x, y, z, x, A}, "G");

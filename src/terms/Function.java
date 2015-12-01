@@ -1,7 +1,6 @@
 package terms;
 
 import expressions.Term;
-import sun.security.action.GetBooleanSecurityPropertyAction;
 
 public class Function extends Term {
 
